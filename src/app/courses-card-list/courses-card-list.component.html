@@ -17,14 +17,14 @@
     <button mat-button class="mat-raised-button mat-primary" [routerLink]="['/courses', course.url]">
       VIEW COURSE
     </button>
-
-    <ng-container>
-      <ng-container>
+    <!-- role based access to the add button -->
+    <ng-container *ngIf="(userService.roles$ | async) as roles">
+      <ng-container *ngIf="roles.admin">
         <button mat-button class="mat-raised-button mat-accent"
                 (click)="editCourse(course)">
           EDIT
         </button>
-        <button mat-mini-fab color="warn">
+        <button mat-mini-fab color="warn" (click)="deleteCourse(course)">
           <mat-icon>delete</mat-icon>
         </button>
       </ng-container>

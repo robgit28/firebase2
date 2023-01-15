@@ -7,21 +7,41 @@ import {LoginComponent} from './login/login.component';
 import {CreateCourseComponent} from './create-course/create-course.component';
 import {AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import {CreateUserComponent} from './create-user/create-user.component';
+import { CourseResolver } from './services/course.resolver';
+
+// our auth pipe function 
+// redirectUnauthorizedTo - Firebase auth pipe 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login'])
+
+// our admin auth pipe function
+// hasCustomClaim - Firebase auth pipe 
+const adminOnly = () => hasCustomClaim('admin');
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent, 
+    // our auth guard 
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin
+    }
   },
   {
     path: 'create-course',
-    component: CreateCourseComponent
-
+    component: CreateCourseComponent, 
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: adminOnly
+    }
   },
   {
     path: 'create-user',
-    component: CreateUserComponent
-
+    component: CreateUserComponent, 
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: adminOnly
+    }
   },
   {
     path: 'about',
@@ -33,7 +53,15 @@ const routes: Routes = [
   },
   {
     path: 'courses/:courseUrl',
-    component: CourseComponent
+    component: CourseComponent, 
+    resolve: {
+      course: CourseResolver
+    },
+    // our auth guard 
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin
+    }
   },
   {
     path: '**',

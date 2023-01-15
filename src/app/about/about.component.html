@@ -5,10 +5,13 @@
 
   <img class="course-image mat-elevation-z10"
        src="https://angular-university.s3-us-west-1.amazonaws.com/course-images/firebase-course-1.jpg">
-
-
+       
     <button mat-raised-button class="upload-btn" color="primary" (click)="uploadData()">Populate Database</button>
-
+    <button mat-raised-button class="upload-btn" color="accent" (click)="onReadDoc()">Read Document</button>
+    <button mat-raised-button class="upload-btn" color="accent" (click)="onReadCollection()">Read Collection</button>
+    <button mat-raised-button class="upload-btn" color="accent" (click)="onReadCollectionGroup()">Read Collection Group</button>
+    <button mat-raised-button class="upload-btn" color="accent" (click)="onReadDocRealtime()">Read Document Realtime</button>
+    <button mat-raised-button class="upload-btn" color="accent" (click)="onReadDocValueChanges()">Read Document Value Changes</button>
 </div>
 
 
